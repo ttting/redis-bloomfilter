@@ -12,7 +12,7 @@ redis-bloomFilter发布在JitPack，可以选择下载源码编译，或者通�
 	<repository>
 		<id>jitpack.io</id>
 		<url>https://jitpack.io</url>
-  </repository>
+    </repository>
 </repositories>
 ```
 
@@ -20,9 +20,9 @@ redis-bloomFilter发布在JitPack，可以选择下载源码编译，或者通�
 
 ```xml
 <dependency>
-	<groupId>com.github.ttting.netty-boot</groupId>
-	<artifactId>netty-boot</artifactId>
-	<version>ce67bf00b4</version>
+    <groupId>com.github.ttting</groupId>
+    <artifactId>redis-bloomfilter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
