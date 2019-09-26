@@ -10,6 +10,27 @@ import redis.clients.jedis.JedisPool;
  * Created by jiangtiteng
  */
 public class JedisBloomfilterTest {
+
+    @Test
+    public void testLongBloomfilter() {
+        JedisPool jedisPool = new JedisPool("localhost", 6379);
+        JedisBitArray jedisBitArray = new JedisBitArray(jedisPool, "test-1");
+        BloomFilter<Long> bloomFilter = BloomFilter.create((Funnel<Long>) (from, into)
+                        -> into.putLong(from), 1_0000_0000, 0.0000001,
+                BloomFilterStrategies.MURMUR128_MITZ_32, jedisBitArray);
+
+        long testElement1 = 1;
+        long testElement2 = 2;
+        long testElement3 = 3;
+
+        bloomFilter.put(testElement1);
+        bloomFilter.put(testElement2);
+
+        Assert.assertTrue(bloomFilter.mightContain(testElement1));
+        Assert.assertTrue(bloomFilter.mightContain(testElement2));
+        Assert.assertFalse(bloomFilter.mightContain(testElement3));
+    }
+
     @Test
     public void testJedisBloomfilter() {
         JedisPool jedisPool = new JedisPool("localhost", 6379);
