@@ -3,6 +3,7 @@ package me.ttting.common.hash;
 import com.google.common.hash.Funnel;
 import com.google.common.hash.Hashing;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -36,16 +37,23 @@ public enum BloomFilterStrategies implements BloomFilter.Strategy {
             int hash1 = (int) hash64;
             int hash2 = (int) (hash64 >>> 32);
 
+            List<Long> indexes = new LinkedList<>();
+
             for (int i = 1; i <= numHashFunctions; i++) {
                 int combinedHash = hash1 + (i * hash2);
                 // Flip all the bits if it's negative (guaranteed positive number)
                 if (combinedHash < 0) {
                     combinedHash = ~combinedHash;
                 }
-                if (!bits.get(combinedHash % bitSize)) {
-                    return false;
-                }
+
+                indexes.add(combinedHash % bitSize);
             }
+
+            List<Boolean> result = bits.batchGet(indexes);
+
+            long falseCount = result.stream().filter(aBoolean -> !aBoolean).count();
+            if (falseCount > 0)
+                return false;
             return true;
         }
     }
