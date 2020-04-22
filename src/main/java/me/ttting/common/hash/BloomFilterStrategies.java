@@ -18,6 +18,8 @@ public enum BloomFilterStrategies implements BloomFilter.Strategy {
             int hash1 = (int) hash64;
             int hash2 = (int) (hash64 >> 32);
 
+            List<Long> indexes = new LinkedList<>();
+
             boolean bitsChanged = false;
             for (int i = 1; i <= numHashFunctions; i++) {
                 int combinedHash = hash1 + (i * hash2);
@@ -25,9 +27,10 @@ public enum BloomFilterStrategies implements BloomFilter.Strategy {
                 if (combinedHash < 0) {
                     combinedHash = ~combinedHash;
                 }
-                bitsChanged |= bitArray.set(combinedHash % bitSize);
+                indexes.add(combinedHash % bitSize);
             }
-            return bitsChanged;
+            List<Boolean> result = bitArray.batchSet(indexes);
+            return result.stream().filter(aBoolean -> !aBoolean).count() > 0;
         }
 
         @Override
@@ -52,9 +55,7 @@ public enum BloomFilterStrategies implements BloomFilter.Strategy {
             List<Boolean> result = bits.batchGet(indexes);
 
             long falseCount = result.stream().filter(aBoolean -> !aBoolean).count();
-            if (falseCount > 0)
-                return false;
-            return true;
+            return falseCount == 0;
         }
     }
 
