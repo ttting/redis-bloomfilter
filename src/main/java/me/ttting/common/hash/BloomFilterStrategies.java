@@ -3,6 +3,8 @@ package me.ttting.common.hash;
 import com.google.common.hash.Funnel;
 import com.google.common.hash.Hashing;
 
+import java.util.List;
+
 /**
  * Created by jiangtiteng
  */

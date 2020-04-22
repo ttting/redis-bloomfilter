@@ -1,7 +1,11 @@
 package me.ttting.common.hash;
 
+import com.sun.org.apache.regexp.internal.REUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Pipeline;
+
+import java.util.List;
 
 /**
  * Created by jiangtiteng
@@ -25,7 +29,7 @@ public class JedisBitArray implements BitArray {
     private JedisBitArray() {
     }
 
-    public JedisBitArray(JedisPool jedisPool, String key) {
+    public JedisBitArray(JedisPool jedisPool, String prefix) {
         this.jedisPool = jedisPool;
         this.key = REDIS_PREFIX + key;
     }
@@ -71,5 +75,24 @@ public class JedisBitArray implements BitArray {
     @Override
     public long bitSize() {
         return this.bitSize;
+    }
+
+    @Override
+    public List<Boolean> batchGet(List<Long> indexs) {
+
+        return (List<Boolean>) execute(jedis -> {
+            Pipeline pipeline = jedis.pipelined();
+            indexs.forEach(index -> pipeline.getbit(key, index));
+            return pipeline.syncAndReturnAll();
+        });
+    }
+
+    @Override
+    public List<Boolean> batchSet(List<Long> indexs) {
+        return (List<Boolean>) execute(jedis -> {
+            Pipeline pipeline = jedis.pipelined();
+            indexs.forEach(index -> pipeline.setbit(key, index, true));
+            return pipeline.syncAndReturnAll();
+        });
     }
 }
