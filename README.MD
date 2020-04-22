@@ -29,7 +29,7 @@ redis-bloomFilter发布在JitPack，可以选择下载源码编译，或者通�
 ### 示例
 
 
-####BloomFilter demo
+#### BloomFilter demo
 Redis-bloomFilter基于Guava的BloomFilter改造，api基本完全和Guava BloomFilter相同。对于基于内存的Guava BloomFilter只需要替换类就可以完成切换。
 
 ```java
@@ -61,7 +61,7 @@ Redis-bloomFilter基于Guava的BloomFilter改造，api基本完全和Guava Bloom
 ```
 更多详情可以参考 [redis-bloomfilter](https://github.com/ttting/redis-bloomfilter/blob/master/src/test/java/me/ttting/common/hash/JedisBloomfilterTest.java)
 
-####基于jedis 创建
+#### 基于jedis 创建
 
 ```
     @Bean
@@ -73,7 +73,7 @@ Redis-bloomFilter基于Guava的BloomFilter改造，api基本完全和Guava Bloom
     }
 ```
 
-####基于spring redis template创建
+#### 基于spring redis template创建
 
 ```java
     @Bean
@@ -86,7 +86,7 @@ Redis-bloomFilter基于Guava的BloomFilter改造，api基本完全和Guava Bloom
 ```
 更多详情可以参考 [RedisBloomFilterDemo.java](https://github.com/ttting/redis-bloomfilter/blob/master/src/test/java/me/ttting/common/hash/RedisBloomFilterDemo.java)
 
-###版本说明
+### 版本说明
 
 |  版本  | 说明 |
 | --------- | ------ |
