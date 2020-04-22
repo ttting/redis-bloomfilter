@@ -8,8 +8,10 @@ import java.util.List;
 public interface BitArray {
     void setBitSize(long bitSize);
 
+    @Deprecated
     boolean set(long index);
 
+    @Deprecated
     boolean get(long index);
 
     long bitSize();

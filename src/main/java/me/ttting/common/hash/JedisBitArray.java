@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by jiangtiteng
  */
-public class JedisBitArray implements BitArray {
+public class JedisBitArray extends AbstractBitArray {
     @FunctionalInterface
     public interface JedisRunable {
         Object run(Jedis jedis);
@@ -18,20 +18,13 @@ public class JedisBitArray implements BitArray {
 
     private JedisPool jedisPool;
 
-    private String key;
-
-    private long bitSize;
-
-    public static final long MAX_REDIS_BIT_SIZE = 4294967296L;
-
-    public static final String REDIS_PREFIX = "BLOOM_FILTER_";
-
     private JedisBitArray() {
+        super(null);
     }
 
     public JedisBitArray(JedisPool jedisPool, String prefix) {
+        super(prefix);
         this.jedisPool = jedisPool;
-        this.key = REDIS_PREFIX + key;
     }
 
     private Object execute(JedisRunable runnable) {
@@ -45,14 +38,6 @@ public class JedisBitArray implements BitArray {
             if (jedis != null)
                 jedis.close();
         }
-    }
-
-    @Override
-    public void setBitSize(long bitSize) {
-        if (bitSize > MAX_REDIS_BIT_SIZE)
-            throw new IllegalArgumentException("Invalid redis bit size, must small than 2 to the 32");
-
-        this.bitSize = bitSize;
     }
 
     @Override
@@ -70,11 +55,6 @@ public class JedisBitArray implements BitArray {
         boolean result;
         result = (Boolean) execute(jedis -> jedis.getbit(key, index));
         return result;
-    }
-
-    @Override
-    public long bitSize() {
-        return this.bitSize;
     }
 
     @Override
