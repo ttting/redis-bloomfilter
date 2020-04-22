@@ -1,5 +1,5 @@
 # redis-bloomFilter
-redis-bloomFilter是基于redis的bitset实现的bloomfilter.具体原理和实现思路可以参考[BloomFilter基于redis的实现](https://github.com/ttting/blog/blob/master/redis/BloomFilter%E5%9F%BA%E4%BA%8Eredis%E7%9A%84%E5%AE%9E%E7%8E%B0.md)
+redis-bloomFilter是基于redis的bitset实现的bloomfilter.具体原理和实现思路可以参考[BloomFilter基于redis的实现](https://www.jianshu.com/p/cae51ad2486c)
 
 ## 使用
 redis-bloomFilter发布在JitPack，可以选择下载源码编译，或者通过jitpack源添加依赖。
@@ -93,7 +93,7 @@ Redis-bloomFilter基于Guava的BloomFilter改造，api基本完全和Guava Bloom
 | 1.0.0-SNAPSHOT | 初始版本，基于jedis实现Bloomfilter |
 | 1.1.0  | 1 基于redis pipeline优化redis set/get性能 2 支持基于spring-redis-template 创建Bloomfilter |
 
-更多细节可以参考[BloomFilter基于redis的实现](https://github.com/ttting/blog/blob/master/redis/BloomFilter%E5%9F%BA%E4%BA%8Eredis%E7%9A%84%E5%AE%9E%E7%8E%B0.md)
+更多细节可以参考[BloomFilter基于redis的实现](https://www.jianshu.com/p/cae51ad2486c)
 
 License
 -------
